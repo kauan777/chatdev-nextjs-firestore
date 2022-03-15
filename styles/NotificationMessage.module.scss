@@ -1,0 +1,24 @@
+.containerNotificationMessage{
+
+    position: fixed;
+    width: 100%;
+    bottom: 7rem;
+    z-index: 4;
+    
+    .contentNotificationMessage{
+        padding: 8px;
+        background-color: #E63462;
+        cursor: pointer;
+        margin: 0 auto;
+        width: 150px;
+        text-align: center;
+        border-radius: 20px;
+        box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.07), 0px 46.233px 36.9864px rgba(0, 0, 0, 0.0519173), 0px 26.4535px 21.1628px rgba(0, 0, 0, 0.0438747), 0px 16.0571px 12.8457px rgba(0, 0, 0, 0.0377964), 0px 9.67509px 7.74008px rgba(0, 0, 0, 0.0322036), 0px 5.38772px 4.31018px rgba(0, 0, 0, 0.0261253), 0px 2.31722px 1.85378px rgba(0, 0, 0, 0.0180827);
+
+        span{
+            color: #fff;
+        }
+
+    }
+
+}

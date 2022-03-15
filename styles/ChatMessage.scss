@@ -1,0 +1,54 @@
+.messageContainer{
+    position: relative;
+    margin-bottom: 16px;
+
+    img{
+        width: 32px;
+        height: 32px;
+        object-fit: cover;
+        border-radius: 50%;
+
+    }
+
+    .message{
+        max-width: fit-content;
+        padding: 1.2rem;
+        margin-left: 4rem;
+        margin-top: -1.2rem;
+        border-radius: 0rem 1.5rem 1.5rem 1.5rem;
+        margin-bottom: 2.4rem;
+        flex: 1;
+        word-break: break-all;
+    }
+    
+    span{
+        display: block;
+        font-size: 1.2rem;
+    }
+}
+
+.sent{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    
+    img{
+        float: right;
+    }
+    
+    .message{
+        margin: -1.2rem 4rem 0rem 0rem;
+        background-color: #E63462;
+        border-radius: 1.5rem 0rem 1.5rem 1.5rem;
+        span{
+            color: #fff;
+        }
+    }
+}
+
+
+.received{
+    .message{
+        background-color: #C4C4C4;
+    }
+}
