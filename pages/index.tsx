@@ -1,11 +1,52 @@
+import { GetServerSideProps } from 'next'
+import { getSession, signIn, useSession } from 'next-auth/react'
 import Head from 'next/head'
-import ChatDev from '../src/components/Chat' 
-import { useAuth } from '../src/hooks/useAuth'
+import { useEffect, useState } from 'react'
+import ChatDev from './chat' 
 
+type User = {
+  id: string;
+  name: string;
+  avatar: string;
+  }
+
+export const getServerSideProps = async ({ req }: any) => {
+
+  const session = await getSession({ req });
+
+  if (session) {
+    return {
+      redirect: {
+        destination: '/chat',
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
+
+
+}
 
 export default function Home(){
 
-    const {user, handleSignIn } = useAuth()
+    const [user, setUser] = useState<User>() 
+
+    const { data } = useSession()
+    
+    async function handleSignIn(){
+      
+      signIn("github")
+      
+          setUser({
+            id: data?.user?.email || "",
+            name: data?.user?.name || "",
+            avatar: data?.user?.image || ""
+          })
+      }
+
 
     return (
       <>

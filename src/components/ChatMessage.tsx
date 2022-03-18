@@ -1,5 +1,4 @@
-import React from 'react';
-import { useAuth } from '../hooks/useAuth';
+import React, { useState } from 'react';
 
 type messageProps = {
     text: string, 
@@ -10,7 +9,7 @@ type messageProps = {
 
 function ChatMessage({text, photoUser, nameUser, idUser}: messageProps){
     
-    const { user } = useAuth()
+    const { user }: any = useState()
 
     const messageClass = idUser === user?.id ? 'sent' : 'received'
     

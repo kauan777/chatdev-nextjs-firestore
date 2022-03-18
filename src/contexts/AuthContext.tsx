@@ -26,8 +26,6 @@ export function AuthContextProvider(props: AuthContextProviderProps){
     const [user, setUser] = useState<User>() 
 
   useEffect(()=>{
-    const { data } = useSession()
-    console.log(data)
 
   }, []) 
 

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { collection, doc, limit, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import Scroll from 'react-scroll';
-import { useAuth } from '../hooks/useAuth';
-import { db } from '../services/firebase';
-import ChatMessage from './ChatMessage';
-import styles from '../../styles/Chat.module.scss';
+import { db } from '../src/services/firebase';
+import ChatMessage from '../src/components/ChatMessage';
+import styles from '../styles/Chat.module.scss';
 import { FiLogOut } from 'react-icons/fi'
 import {v4 as uuidv4} from 'uuid';
-import NotificationMessage from './NotificationMessage';
-import { useNotification } from '../hooks/useNotification';
+import NotificationMessage from '../src/components/NotificationMessage';
+import { useNotification } from '../src/hooks/useNotification';
+import { useSession } from 'next-auth/react';
 
 type TypeMessage = {
   id: string,
@@ -18,14 +18,12 @@ type TypeMessage = {
   userId: string
 }
 
+const { data } = useSession()
+
+
 const ChatDev: React.FC = () => {
 
-  async function addMessage(
-    nameUser: string | undefined, 
-    photoUser: string | undefined, 
-    text: string | undefined, 
-    userId: string | undefined
-    ){
+  async function addMessage({nameUser, photoUser, text, userId }: TypeMessage){
     await setDoc(doc(db, "messages", `${uuidv4()}`), {
       nameUser: nameUser,
       photoUser: photoUser,
@@ -42,7 +40,8 @@ const ChatDev: React.FC = () => {
   const [textMessage, setText] = useState('');
   const [amountMessages, setAmountMessages] = useState(null as number | null);
 
-  const { user, signOut } = useAuth();
+  const { user, signOut }: any = useState();
+  //arrumar
 
   useEffect(() => {
 
@@ -89,7 +88,7 @@ const ChatDev: React.FC = () => {
           <span>{user?.name}</span>
         </div>
 
-        <button onClick={signOut}>
+        <button onClick={() => signOut()}>
           <FiLogOut color='#fff' size={24}/>
         </button>
 
@@ -118,7 +117,12 @@ const ChatDev: React.FC = () => {
             value={textMessage}
             onChange={(e) => setText(e.target.value)}
             />
-          <button type='button' onClick={() => addMessage(user?.name, user?.avatar, textMessage, user?.id)}>Send</button>
+          {/* <button type='button' onClick={() => addMessage(null
+            //data?.user?.name, 
+            // data?.user?.image, 
+            // textMessage, 
+            // data?.user?.email
+            )}>Send</button> */}
         </div>
       </section>
 
