@@ -11,17 +11,22 @@ import { useNotification } from '../src/hooks/useNotification';
 import { useSession } from 'next-auth/react';
 
 type TypeMessage = {
-  id: string,
+  id?: string,
   text: string,
   nameUser: string,
   photoUser: string,
   userId: string
 }
 
-const { data } = useSession()
 
 
 const ChatDev: React.FC = () => {
+  
+  const { data } = useSession()
+  const {newMessage, setNewMessage } = useNotification();
+  const [messages, setMessages] = useState([])
+  const [textMessage, setText] = useState('');
+  const [amountMessages, setAmountMessages] = useState(null as number | null);
 
   async function addMessage({nameUser, photoUser, text, userId }: TypeMessage){
     await setDoc(doc(db, "messages", `${uuidv4()}`), {
@@ -35,12 +40,14 @@ const ChatDev: React.FC = () => {
     Scroll.animateScroll.scrollToBottom({ smooth: 'linear', duration: 0 });
   }
 
-  const {newMessage, setNewMessage } = useNotification();
-  const [messages, setMessages] = useState([])
-  const [textMessage, setText] = useState('');
-  const [amountMessages, setAmountMessages] = useState(null as number | null);
+  const messageParameter: TypeMessage = {
+    nameUser: String(data?.user?.name), 
+    photoUser: String(data?.user?.image), 
+    text: textMessage, 
+    userId: String(data?.user?.email)
+  }
 
-  const { user, signOut }: any = useState();
+  //const { user, signOut }: any = useState();
   //arrumar
 
   useEffect(() => {
@@ -67,7 +74,7 @@ const ChatDev: React.FC = () => {
     if(messages.length !== 0 && messages.length !== amountMessages && amountMessages !== null){
       
       const { userId } = messages[messages.length - 1]
-       if(userId !== user?.id){
+       if(userId !== data?.user?.email){
          setNewMessage(true)
          setTimeout(() => {
           setNewMessage(false)
@@ -84,11 +91,11 @@ const ChatDev: React.FC = () => {
       {newMessage && <NotificationMessage/>}
       <section className={styles.menuHeader}>
         <div className={styles.profileContent}>
-          <img src={`${user?.avatar}`} alt={user?.name}/>
-          <span>{user?.name}</span>
+          <img src={`${data?.user?.image}`} alt={`${data?.user?.name}`}/>
+          <span>{data?.user?.name}</span>
         </div>
 
-        <button onClick={() => signOut()}>
+        <button onClick={() => console.log("oi")}>
           <FiLogOut color='#fff' size={24}/>
         </button>
 
@@ -117,12 +124,7 @@ const ChatDev: React.FC = () => {
             value={textMessage}
             onChange={(e) => setText(e.target.value)}
             />
-          {/* <button type='button' onClick={() => addMessage(null
-            //data?.user?.name, 
-            // data?.user?.image, 
-            // textMessage, 
-            // data?.user?.email
-            )}>Send</button> */}
+          <button type='button' onClick={() => addMessage(messageParameter)}>Send</button> 
         </div>
       </section>
 

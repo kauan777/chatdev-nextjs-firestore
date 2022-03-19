@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 
 type messageProps = {
@@ -9,9 +10,10 @@ type messageProps = {
 
 function ChatMessage({text, photoUser, nameUser, idUser}: messageProps){
     
-    const { user }: any = useState()
+    const { data } = useSession()
 
-    const messageClass = idUser === user?.id ? 'sent' : 'received'
+
+    const messageClass = idUser === data?.user?.email ? 'sent' : 'received'
     
     return(
       <article className={`messageContainer ${messageClass}`}>
