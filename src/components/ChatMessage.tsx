@@ -1,5 +1,6 @@
+import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
-import React, { useState } from 'react';
+import React from 'react';
 
 type messageProps = {
     text: string, 
@@ -11,17 +12,23 @@ type messageProps = {
 function ChatMessage({text, photoUser, nameUser, idUser}: messageProps){
     
     const { data } = useSession()
-
-
     const messageClass = idUser === data?.user?.email ? 'sent' : 'received'
+
+    const item = {
+      hidden: { y: 100, opacity: 0 },
+      visible: {
+        y: 0,
+        opacity: 1
+      }
+    }
     
     return(
-      <article className={`messageContainer ${messageClass}`}>
+      <motion.article variants={item} initial="hidden" animate="visible" className={`messageContainer ${messageClass}`}>
         <img src={`${photoUser}`} alt={nameUser}/>
         <div className='message'>
           <span>{text}</span>
         </div>
-      </article>
+      </motion.article>
   );
 }
 

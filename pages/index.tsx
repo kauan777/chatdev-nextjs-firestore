@@ -3,24 +3,6 @@ import styled from '../styles/Login.module.scss'
 import { getSession, signIn } from 'next-auth/react'
 import { AiFillGithub } from 'react-icons/ai'
 
-export const getServerSideProps = async ({ req }: any) => {
-
-  const session = await getSession({ req });
-
-  if (session) {
-    return {
-      redirect: {
-        destination: '/chat',
-        permanent: false,
-      }
-    }
-  }
-
-  return {
-    props: {}
-  }
-}
-
 export default function Home(){
 
    const handleSignIn = async () => signIn("github") 
@@ -44,5 +26,23 @@ export default function Home(){
           </main>
       </>
     )
+  }
+
+  export const getServerSideProps = async ({ req }: any) => {
+
+    const session = await getSession({ req });
+    
+    if (session) {
+      return {
+        redirect: {
+          destination: '/chat',
+          permanent: false,
+        }
+      }
+    }
+  
+    return {
+      props: {}
+    }
   }
 

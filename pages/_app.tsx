@@ -1,7 +1,6 @@
 import '../styles/globals.scss'
 import '../styles/ChatMessage.scss';
 import type { AppProps } from 'next/app'
-import { AuthContextProvider } from '../src/contexts/AuthContext'
 import { NewMessageContextProvider } from '../src/contexts/newMessageContext'; 
 import Head from 'next/head';
 import { SessionProvider } from 'next-auth/react'
@@ -16,11 +15,9 @@ function MyApp({ Component, pageProps: {session, ...pageProps} }: AppProps) {
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
       </Head>
       <SessionProvider session={session}>
-      <AuthContextProvider>
         <NewMessageContextProvider>
           <Component {...pageProps} />
         </NewMessageContextProvider>
-      </AuthContextProvider>
       </SessionProvider>
     </>
   )
