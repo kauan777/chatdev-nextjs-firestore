@@ -1,9 +1,9 @@
 import '../styles/globals.scss'
 import '../styles/ChatMessage.scss';
-import type { AppProps } from 'next/app'
-import { NewMessageContextProvider } from '../src/contexts/newMessageContext'; 
 import Head from 'next/head';
+import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
+import { NewMessageContextProvider } from '../src/contexts/NewMessageContext'; 
 
 function MyApp({ Component, pageProps: {session, ...pageProps} }: AppProps) {
   return (
@@ -24,8 +24,3 @@ function MyApp({ Component, pageProps: {session, ...pageProps} }: AppProps) {
 }
 
 export default MyApp
-
-
-
-//Remove authentication with Google
-//Add authentication with Github using NextAuth

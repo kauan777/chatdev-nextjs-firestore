@@ -24,7 +24,6 @@ const ChatDev: React.FC = () => {
   const { data } = useSession() //Data User Loged
   const {newMessage, setNewMessage } = useNotification();
   const [messages, setMessages] = useState([])
-  const [distanceBottomInput, setDistanceBottomInput] = useState(Number)
   const [textMessage, setText] = useState('');
   const [amountMessages, setAmountMessages] = useState(null as number | null);
 
@@ -66,19 +65,16 @@ const ChatDev: React.FC = () => {
 
   }, []);
 
+
+  //Função para ver se o usuário recebeu uma nova mensagem
   useEffect(() => {
     
-    console.log("altura da tela: " + window.innerHeight)
-    console.log("bottom input:" +  inputMessage.current?.getBoundingClientRect().bottom)
-    console.log("dim:", window.innerHeight - inputMessage.current?.getBoundingClientRect().bottom)
-
-    //setDistanceBottomInput(inputMessage.current?.getBoundingClientRect().bottom)
-    
-
+      //Salva o número de mensagensem um estado
     if(messages.length !== 0 && amountMessages === null){
       setAmountMessages(messages.length)
     }
     
+  //Verifica se tem uma nova mensagem através do tamanho do array(messages) e o número salvo no estado acima
     if(messages.length !== 0 && messages.length !== amountMessages && amountMessages !== null){
       
       const { userId } = messages[messages.length - 1]
